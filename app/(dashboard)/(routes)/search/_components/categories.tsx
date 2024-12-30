@@ -16,21 +16,39 @@ const iconMap: Record<Category["name"], IconType> = {
   Crypto: FaBitcoin,
 };
 
+// Loading fallback component
+const CategoriesLoader = () => {
+  return (
+    <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
+      {[1, 2].map((i) => (
+        <div
+          key={i}
+          className="h-8 w-24 rounded-lg bg-gray-200 animate-pulse"
+        />
+      ))}
+    </div>
+  );
+};
+
+const CategoriesList = ({ items }: CategoriesProps) => {
+  return (
+    <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
+      {items.map((item) => (
+        <CategoryItem
+          key={item.id}
+          label={item.name}
+          icon={iconMap[item.name]}
+          value={item.id}
+        />
+      ))}
+    </div>
+  );
+};
+
 const Categories = ({ items }: CategoriesProps) => {
   return (
-    <Suspense>
-      <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
-        {items.map((item) => {
-          return (
-            <CategoryItem
-              key={item.id}
-              label={item.name}
-              icon={iconMap[item.name]}
-              value={item.id}
-            />
-          );
-        })}
-      </div>
+    <Suspense fallback={<CategoriesLoader />}>
+      <CategoriesList items={items} />
     </Suspense>
   );
 };
