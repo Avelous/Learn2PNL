@@ -4,7 +4,8 @@ import { getCourses } from "@/actions/get-courses";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import CoursesList from "@/components/courses-list";
-import dynamic from "next/dynamic";
+import SearchInput from "@/components/search-input";
+import { Suspense } from "react";
 
 interface SearchPageProps {
   searchParams: {
@@ -12,11 +13,6 @@ interface SearchPageProps {
     categoryId: string;
   };
 }
-
-const SearchInput = dynamic(() => import("@/components/search-input"), {
-  ssr: false,
-  loading: () => <div>Loading...</div>,
-});
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const { userId } = await auth();
@@ -34,7 +30,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const courses = await getCourses({ userId, ...searchParams });
 
   return (
-    <>
+    <Suspense>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
         <SearchInput />
       </div>
@@ -42,7 +38,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
         <Categories items={categories} />
         <CoursesList items={courses} />
       </div>
-    </>
+    </Suspense>
   );
 };
 
