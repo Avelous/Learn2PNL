@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  SignIn,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import ToasterProvider from "@/components/providers/toaster.provider";
 import { ConfettiProvider } from "@/components/providers/confetti.provider";
 
@@ -25,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl={"/"}>
       <html lang="en">
         <body className={inter.className}>
           <ConfettiProvider />

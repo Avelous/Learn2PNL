@@ -69,7 +69,7 @@ const ChapterIdPage = async ({
         </div>
         <div>
           <div className="p-4 flex flex-col md:flex-row items-center justify-between">
-            <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
+            <h2 className="text-lg font-semibold mb-2">{chapter.title}</h2>
 
             {purchase ? (
               <CourseProgressButton
@@ -92,10 +92,10 @@ const ChapterIdPage = async ({
           {!!attachments.length && (
             <>
               <Separator />
-              <div className="p-4">
+              <div className="p-4 ">
                 {attachments.map((attachment) => (
                   <a
-                    className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline"
+                    className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline text-xs"
                     href={attachment.url}
                     key={attachment.id}
                     target="_blank"
