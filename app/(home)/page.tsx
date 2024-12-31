@@ -10,9 +10,16 @@ import { features } from "@/data/data";
 import Footer from "./_components/footer";
 import { FAQ } from "./_components/faq";
 
+import { useAuth } from "@clerk/nextjs";
+
 import { Users, TvMinimalPlay, Trophy } from "lucide-react";
 
 export default function LandingPage() {
+
+  const {userId} = useAuth();
+
+
+
   return (
     <div className="min-h-screen text-sm">
       <nav className="border-b">
@@ -47,9 +54,9 @@ export default function LandingPage() {
               >
                 Courses
               </Link>
-              <Link href="/sign-in">
+              <Link href={userId ? "/dashboard" : "/sign-in"}>
                 <Button className="px-4 py-2 rounded-md bg-sky-400 text-white hover:bg-sky-400/50">
-                  Sign In
+                  {userId ? "Dashboard" : "Sign In"}
                 </Button>
               </Link>
             </div>
