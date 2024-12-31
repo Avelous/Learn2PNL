@@ -16,7 +16,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen text-sm">
       <nav className="border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between h-16">
             <div className="flex-shrink-0 flex items-center">
               <Image
@@ -25,9 +25,9 @@ export default function LandingPage() {
                 width={32}
                 height={32}
               />
-              <h1 className="text-2xl font-bold text-sky-700">Learn2PNL</h1>
+              <h1 className="text-lg font-bold text-sky-700">Learn2PNL</h1>
             </div>
-            <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-4">
               <Link
                 href="#faq"
                 className="text-gray-700 hover:text-gray-900"
@@ -57,7 +57,7 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24">
+      <div className="relative max-w-7xl mx-auto px-4 pt-16 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-3 py-1 mb-6 border-2">
@@ -66,7 +66,7 @@ export default function LandingPage() {
               </span>
             </div>
 
-            <h1 className="text-2xl font-bold leading-tight mb-6">
+            <h1 className="text-lg lg:text-2xl font-bold leading-tight mb-6">
               Money making through trading is AN ART
               <br />
               We will teach you to master it
@@ -117,7 +117,7 @@ export default function LandingPage() {
 
       {/* Features Section */}
       <div className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 ">
           <div className="text-center mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Unlock Your Potential
@@ -182,7 +182,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <div className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="relative py-24 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <p className="text-sky-700 font-medium mb-2">Students love us</p>
           <h2 className="text-2xl font-bold mb-4">Student testimonials</h2>

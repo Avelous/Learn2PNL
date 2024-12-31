@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="border-t border-gray-200 bg-white">
       <div className="max-w-7xl mx-auto px-8 sm:px-10 lg:px-12 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Image
               src="/logo.svg"
@@ -17,13 +17,13 @@ const Footer = () => {
               width={32}
               height={32}
             />
-            <span className="text-xl font-semibold text-sky-700">
+            <span className="text-sm font-semibold text-sky-700">
               Learn2PNL
             </span>
-            <span className="text-sky-700"> © {currentYear}</span>
+            <span className="text-sky-700 text-xs"> © {currentYear}</span>
           </div>
 
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-3">
             <SocialLink
               href="https://discord.gg/learn2pnl"
               icon="discord"

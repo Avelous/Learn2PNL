@@ -23,6 +23,7 @@ export function Testimonials() {
       plugins={[plugin.current]}
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
+      className="mx-10"
     >
       <CarouselContent>
         {testimonials.map((testimonial, index) => (
@@ -30,7 +31,7 @@ export function Testimonials() {
             <div className="p-1">
               <Card>
                 <CardContent>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm">
+                  <div className="bg-white rounded-2xl shadow-sm">
                     <p className="text-gray-700 mb-8">{testimonial.content}</p>
                     <div className="flex items-center space-x-3">
                       <img

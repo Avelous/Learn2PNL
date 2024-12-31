@@ -41,7 +41,7 @@ export const FAQ = () => {
   const [openIndex, setOpenIndex] = React.useState(-1);
 
   return (
-    <section className="py-24 bg-gray-50 " id="faq">
+    <section className="py-24 bg-gray-50 px-6" id="faq">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2">
         <div className="mb-12 ">
           <p className="text-sky-600 font-medium mb-2">Support</p>
