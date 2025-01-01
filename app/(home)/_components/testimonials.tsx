@@ -12,6 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 
 export function Testimonials() {
   const plugin = React.useRef(
@@ -31,12 +32,14 @@ export function Testimonials() {
             <div className="p-1">
               <Card>
                 <CardContent>
-                  <div className="bg-white rounded-2xl shadow-sm">
+                  <div className="bg-white rounded-2xl shadow-sm py-3">
                     <p className="text-gray-700 mb-8">{testimonial.content}</p>
                     <div className="flex items-center space-x-3">
-                      <img
+                      <Image
                         src={testimonial.logo}
                         alt={testimonial.author}
+                        width={20}
+                        height={20}
                         className="w-10 h-10 rounded-full object-cover object-center"
                       />
                       <div>

@@ -3,78 +3,37 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { Testimonials } from "./_components/testimonials";
-import { Button } from "@/components/ui/button";
-
 import { features } from "@/data/data";
-import Footer from "./_components/footer";
-import { FAQ } from "./_components/faq";
 
 import { useAuth } from "@clerk/nextjs";
 
+import { Testimonials } from "./_components/testimonials";
+import { Button } from "@/components/ui/button";
+import Footer from "./_components/footer";
+import { FAQ } from "./_components/faq";
+import Navbar from "./_components/navbar";
 import { Users, TvMinimalPlay, Trophy } from "lucide-react";
 
 export default function LandingPage() {
-
-  const {userId} = useAuth();
-
-
+  const { userId } = useAuth();
 
   return (
     <div className="min-h-screen text-sm">
-      <nav className="border-b">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between h-16">
-            <div className="flex-shrink-0 flex items-center">
-              <Image
-                src="/logo.svg"
-                alt="Learn2PNL Logo"
-                width={32}
-                height={32}
-              />
-              <h1 className="text-lg font-bold text-sky-700">Learn2PNL</h1>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link
-                href="#faq"
-                className="text-gray-700 hover:text-gray-900"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const faqElement = document.querySelector("#faq");
-                  if (faqElement) {
-                    faqElement.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-              >
-                FAQ
-              </Link>
-              <Link
-                href="/search"
-                className="text-gray-700 hover:text-gray-900"
-              >
-                Courses
-              </Link>
-              <Link href={userId ? "/dashboard" : "/sign-in"}>
-                <Button className="px-4 py-2 rounded-md bg-sky-400 text-white hover:bg-sky-400/50">
-                  {userId ? "Dashboard" : "Sign In"}
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar userId={userId as string} />
 
       <div className="relative max-w-7xl mx-auto px-4 pt-16 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-3 py-1 mb-6 border-2">
               <span className="text-xs text-gray-600">
-                Powered by Learn2PNL
+                Learn 2 secure profits n&apos; cut losses
               </span>
             </div>
 
             <h1 className="text-lg lg:text-2xl font-bold leading-tight mb-6">
-              Money making through trading is AN ART
+              Money making
+              <br />
+              Through trading is AN ART
               <br />
               We will teach you to master it
             </h1>
@@ -112,7 +71,7 @@ export default function LandingPage() {
 
           <div className="relative">
             <div className="aspect-video bg-white rounded-lg shadow-lg overflow-hidden">
-              <img
+              <Image
                 src=""
                 alt="Course preview"
                 className="w-full h-full object-cover"
@@ -194,8 +153,9 @@ export default function LandingPage() {
           <p className="text-sky-700 font-medium mb-2">Students love us</p>
           <h2 className="text-2xl font-bold mb-4">Student testimonials</h2>
           <p className="text-gray-600  max-w-3xl mx-auto">
-            We&lsquo;ve helped hundreds of traders master profitable strategies and
-            level up their careers, but don&lsquo;t just take our word for it.
+            We&lsquo;ve helped hundreds of traders master profitable strategies
+            and level up their careers, but don&lsquo;t just take our word for
+            it.
           </p>
         </div>
 

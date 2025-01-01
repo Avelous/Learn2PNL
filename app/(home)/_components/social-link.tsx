@@ -12,6 +12,6 @@ export const SocialLink = ({ href, icon, label }: SocialLinkProps) => (
     href={href}
     aria-label={label}
   >
-    <Image src={`${icon}.svg`} alt={label} width={15} height={15} />
+    <Image src={`${icon}.svg`} alt={label} width={18} height={18} />
   </Link>
 );

@@ -3,6 +3,7 @@
 import React from "react";
 import { Plus, Minus } from "lucide-react";
 import { SocialLinkBanner } from "./social-link-banner";
+import { Separator } from "@/components/ui/separator";
 
 const faqContents = [
   {
@@ -47,7 +48,8 @@ export const FAQ = () => {
           <p className="text-sky-600 font-medium mb-2">Support</p>
           <h2 className="text-3xl font-bold mb-4">FAQs</h2>
           <p className="text-gray-600 mb-2">
-            Can&lsquo;t find an answer? Join our Discord or follow us on Twitter.
+            Can&lsquo;t find an answer? Join our Discord or follow us on
+            Twitter.
           </p>
           <div className="flex space-x-4 flex-wrap">
             <SocialLinkBanner
@@ -66,7 +68,7 @@ export const FAQ = () => {
           {faqContents.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-sm overflow-hidden"
+              className="bg-white rounded-lg shadow-sm overflow-hidden border-sky-500 border-2"
             >
               <button
                 className="w-full px-6 py-4 flex justify-between items-center text-left"
@@ -81,6 +83,8 @@ export const FAQ = () => {
                   <Plus className="w-5 h-5 text-gray-500" />
                 )}
               </button>
+              <Separator />
+
               <div
                 className={`transition-all duration-300 ease-in-out ${
                   openIndex === index
@@ -88,6 +92,7 @@ export const FAQ = () => {
                     : "max-h-0 opacity-0"
                 }`}
               >
+                <br />
                 <div className="px-6 pb-4">
                   <p className="text-gray-600">{faq.answer}</p>
                 </div>
