@@ -4,6 +4,7 @@ import React from "react";
 import { Plus, Minus } from "lucide-react";
 import { SocialLinkBanner } from "./social-link-banner";
 import { Separator } from "@/components/ui/separator";
+import { discordUrl } from "@/data/constants";
 
 const faqContents = [
   {
@@ -53,7 +54,7 @@ export const FAQ = () => {
           </p>
           <div className="flex space-x-4 flex-wrap">
             <SocialLinkBanner
-              href="https://discord.gg/learn2pnl"
+              href={discordUrl}
               icon="discord"
               label="Discord"
             />
@@ -86,7 +87,7 @@ export const FAQ = () => {
               <Separator />
 
               <div
-                className={`transition-all duration-300 ease-in-out ${
+                className={`transition-all duration-500 ease-in-out ${
                   openIndex === index
                     ? "max-h-48 opacity-100"
                     : "max-h-0 opacity-0"

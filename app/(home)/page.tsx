@@ -14,6 +14,8 @@ import { FAQ } from "./_components/faq";
 import Navbar from "./_components/navbar";
 import { Users, TvMinimalPlay, Trophy } from "lucide-react";
 
+import { discordUrl } from "@/data/constants";
+
 export default function LandingPage() {
   const { userId } = useAuth();
 
@@ -30,10 +32,8 @@ export default function LandingPage() {
               </span>
             </div>
 
-            <h1 className="text-lg lg:text-2xl font-bold leading-tight mb-6">
-              Money making
-              <br />
-              Through trading is AN ART
+            <h1 className=" lg:text-2xl font-bold leading-tight mb-6">
+              Money making through trading is AN ART
               <br />
               We will teach you to master it
             </h1>
@@ -140,9 +140,11 @@ export default function LandingPage() {
             <strong> Act fast!</strong> Join our community and learn from
             experienced traders
           </p>
-          <Link href="/search">
+          <Link href={discordUrl}
+          target="_"
+          >
             <Button className="bg-sky-500 hover:bg-sky-500/50">
-              Browse Courses
+              Gain Access
             </Button>
           </Link>
         </div>

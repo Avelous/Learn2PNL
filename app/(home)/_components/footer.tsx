@@ -2,6 +2,7 @@ import React from "react";
 
 import Image from "next/image";
 import { SocialLink } from "./social-link";
+import { discordUrl } from "@/data/constants";
 
 const currentYear = new Date().getFullYear();
 
@@ -25,7 +26,7 @@ const Footer = () => {
 
           <div className="flex items-center space-x-3">
             <SocialLink
-              href="https://discord.gg/learn2pnl"
+              href={discordUrl}
               icon="discord"
               label="Join our Discord"
             />
