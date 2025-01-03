@@ -1,26 +1,14 @@
 "use client";
 
-import * as z from "zod";
-import { Pencil, PlusCircle, VideoIcon } from "lucide-react";
+import { VideoIcon, Pencil, PlusCircle, Loader2 } from "lucide-react";
 import axios from "axios";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Textarea } from "@/components/ui/textarea";
 import { Chapter, MuxData } from "@prisma/client";
-import Image from "next/image";
-import { on } from "events";
-import { FileUpload } from "@/components/file-upload";
+import { useDropzone } from "react-dropzone";
+import { getPreSignedUrl } from "@/lib/s3";
 import MuxPlayer from "@mux/mux-player-react";
 
 interface ChapterVideoFormProps {
@@ -29,67 +17,83 @@ interface ChapterVideoFormProps {
   chapterId: string;
 }
 
-const formSchema = z.object({
-  videoUrl: z.string().min(1),
-});
+const acceptedTypes = {
+  "video/*": [".mp4", ".mov", ".avi"],
+};
 
 const ChapterVideoForm = ({
   initialData,
   courseId,
   chapterId,
 }: ChapterVideoFormProps) => {
-  const [isEditiing, setIsEditting] = useState(false);
-
-  const toggleEdit = () => {
-    setIsEditting((current) => !current);
-  };
-
+  const [isEditing, setIsEditing] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      videoUrl: initialData.videoUrl || "",
-    },
-  });
+  const toggleEdit = () => setIsEditing((current) => !current);
 
-  const { isSubmitting, isValid } = form.formState;
+  const onDrop = async (acceptedFiles: File[]) => {
+    if (acceptedFiles.length === 0) return;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const file = acceptedFiles[0];
+    setIsUploading(true);
+
     try {
-      await axios.patch(
-        `/api/courses/${courseId}/chapters/${chapterId}`,
-        values
+      const { url, newFileName } = await getPreSignedUrl(
+        file.name,
+        file.type,
+        `${courseId}/${chapterId}`
       );
-      toast.success("Chapter updated");
+
+      await axios.put(url, file, {
+        headers: { "Content-Type": file.type },
+      });
+
+      const videoUrl = `${process.env.NEXT_PUBLIC_S3_URL}/${newFileName}`;
+
+      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, {
+        videoUrl,
+      });
+
+      toast.success("Video uploaded successfully");
       toggleEdit();
       router.refresh();
-    } catch {
+    } catch (error) {
       toast.error("Something went wrong");
+    } finally {
+      setIsUploading(false);
     }
   };
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: acceptedTypes,
+    maxFiles: 1,
+    multiple: false,
+  });
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Chapter video
-        <Button variant="ghost" onClick={toggleEdit}>
-          {isEditiing && <>Cancel</>}
-          {!isEditiing && !initialData.videoUrl && (
+        <Button variant="ghost" onClick={toggleEdit} disabled={isUploading}>
+          {isEditing && "Cancel"}
+          {!isEditing && !initialData.videoUrl && (
             <>
-              <PlusCircle className="h4 w-4 mr-2" />
+              <PlusCircle className="h-4 w-4 mr-2" />
               Add video
             </>
           )}
-          {!isEditiing && initialData.videoUrl && (
+          {!isEditing && initialData.videoUrl && (
             <>
-              <Pencil className="h4 w-4 mr-2" />
+              <Pencil className="h-4 w-4 mr-2" />
               Edit video
             </>
           )}
         </Button>
       </div>
-      {!isEditiing &&
+
+      {!isEditing &&
         (!initialData.videoUrl ? (
           <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
             <VideoIcon className="h-10 w-10 text-slate-500" />
@@ -99,22 +103,30 @@ const ChapterVideoForm = ({
             <MuxPlayer playbackId={initialData.muxData?.playbackId || ""} />
           </div>
         ))}
-      {isEditiing && (
-        <div>
-          <FileUpload
-            endpoint="chapterVideo"
-            onChange={(url) => {
-              if (url) {
-                onSubmit({ videoUrl: url });
-              }
-            }}
-          />
-          <div className="text-sm text-muted-foreground mt-4">
-            Upload this chapter&apos;s video
-          </div>
+
+      {isEditing && (
+        <div
+          {...getRootProps()}
+          className="flex flex-col items-center justify-center h-60 bg-slate-200 rounded-md cursor-pointer border-2 border-dashed border-slate-300 relative"
+        >
+          <input {...getInputProps()} />
+          {isUploading ? (
+            <div className="flex items-center gap-2">
+              <Loader2 className="h-10 w-10 text-slate-500 animate-spin" />
+              <p className="text-sm text-slate-500">Uploading...</p>
+            </div>
+          ) : (
+            <>
+              <VideoIcon className="h-10 w-10 text-slate-500" />
+              <p className="text-sm text-slate-500 mt-2">
+                Drag & drop or click to upload video
+              </p>
+            </>
+          )}
         </div>
       )}
-      {initialData.videoUrl && !isEditiing && (
+
+      {initialData.videoUrl && !isEditing && (
         <div className="text-xs text-muted-foreground mt-2">
           Videos can take a few minutes to process. Refresh the page if video
           does not appear

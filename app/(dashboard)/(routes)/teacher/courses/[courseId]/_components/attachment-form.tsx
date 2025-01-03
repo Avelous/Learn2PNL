@@ -1,54 +1,65 @@
 "use client";
 
-import * as z from "zod";
-import { File, ImageIcon, Loader2, Pencil, PlusCircle, X } from "lucide-react";
+import { File, Loader2, PlusCircle, X } from "lucide-react";
 import axios from "axios";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Textarea } from "@/components/ui/textarea";
 import { Attachment, Course } from "@prisma/client";
-import Image from "next/image";
-import { on } from "events";
-import { FileUpload } from "@/components/file-upload";
+import { useDropzone } from "react-dropzone";
+import { getPreSignedUrl } from "@/lib/s3";
 
 interface AttachmentFormProps {
   initialData: Course & { attachments: Attachment[] };
   courseId: string;
 }
 
-const formSchema = z.object({
-  url: z.string().min(1),
-});
+const acceptedTypes = {
+  "application/*": [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".zip"],
+  "image/*": [".png", ".jpg", ".jpeg", ".gif"],
+  "audio/*": [".mp3", ".wav", ".ogg"],
+};
 
 const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
-  const [isEditiing, setIsEditting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-
-  const toggleEdit = () => {
-    setIsEditting((current) => !current);
-  };
-
   const router = useRouter();
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const toggleEdit = () => setIsEditing((current) => !current);
+
+  const onDrop = async (acceptedFiles: File[]) => {
+    if (acceptedFiles.length === 0) return;
+
+    const file = acceptedFiles[0];
+    setIsUploading(true);
+
     try {
-      await axios.post(`/api/courses/${courseId}/attachments`, values);
-      toast.success("Course updated");
+      const { url, newFileName } = await getPreSignedUrl(
+        file.name,
+        file.type,
+        `${courseId}/attachments`
+      );
+
+      await axios.put(url, file, {
+        headers: { "Content-Type": file.type },
+      });
+
+      const fileUrl = `${process.env.NEXT_PUBLIC_S3_URL}/${newFileName}`;
+
+      await axios.post(`/api/courses/${courseId}/attachments`, {
+        url: fileUrl,
+        name: file.name,
+      });
+
+      toast.success("File uploaded");
       toggleEdit();
       router.refresh();
-    } catch {
+    } catch (error) {
       toast.error("Something went wrong");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -58,79 +69,89 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
       await axios.delete(`/api/courses/${courseId}/attachments/${id}`);
       toast.success("Attachment deleted");
       router.refresh();
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setDeletingId(null);
     }
   };
 
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: acceptedTypes,
+    maxFiles: 1,
+    multiple: false,
+  });
+
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Course attachments
-        <Button variant="ghost" onClick={toggleEdit}>
-          {isEditiing && <>Cancel</>}
-          {!isEditiing && (
+        <Button variant="ghost" onClick={toggleEdit} disabled={isUploading}>
+          {isEditing && "Cancel"}
+          {!isEditing && (
             <>
-              <PlusCircle className="h4 w-4 mr-2" />
+              <PlusCircle className="h-4 w-4 mr-2" />
               Add a file
             </>
           )}
         </Button>
       </div>
-      {!isEditiing && (
+
+      {!isEditing && (
         <>
           {initialData.attachments.length === 0 && (
-            <p className="text-sm mt-2 text-slate-500 italic  ">
-              No attachments yet.
+            <p className="text-sm mt-2 text-slate-500 italic">
+              No attachments yet
             </p>
           )}
           {initialData.attachments.length > 0 && (
             <div className="space-y-2">
-              {initialData.attachments.map((attachment) => {
-                return (
-                  <div
-                    key={attachment.id}
-                    className="flex items-center p-3 w-full bg-sky-100 border-sky-200 border text-sky-700 rounded-md"
-                  >
-                    <File className="h-4 w-4 mr-2 flex-shrink-0" />
-                    <p className="text-sm line-clamp-1">{attachment.name}</p>
-                    {deletingId === attachment.id && (
-                      <div>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      </div>
-                    )}
-                    {deletingId !== attachment.id && (
-                      <button
-                        onClick={() => {
-                          onDelete(attachment.id);
-                        }}
-                        className="ml-auto hover:opacity-75 transition"
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
+              {initialData.attachments.map((attachment) => (
+                <div
+                  key={attachment.id}
+                  className="flex items-center p-3 w-full bg-sky-100 border-sky-200 border text-sky-700 rounded-md"
+                >
+                  <File className="h-4 w-4 mr-2 flex-shrink-0" />
+                  <p className="text-sm line-clamp-1">{attachment.name}</p>
+                  {deletingId === attachment.id ? (
+                    <div className="ml-auto">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => onDelete(attachment.id)}
+                      className="ml-auto hover:opacity-75 transition"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
           )}
         </>
       )}
-      {isEditiing && (
-        <div>
-          <FileUpload
-            endpoint="courseAttachment"
-            onChange={(url) => {
-              if (url) {
-                onSubmit({ url: url });
-              }
-            }}
-          />
-          <div className="text-sm text-muted-foreground mt-4">
-            Add anything your students might need to complete the course
-          </div>
+
+      {isEditing && (
+        <div
+          {...getRootProps()}
+          className="flex flex-col items-center justify-center h-60 bg-slate-200 rounded-md cursor-pointer border-2 border-dashed border-slate-300 relative"
+        >
+          <input {...getInputProps()} />
+          {isUploading ? (
+            <div className="flex items-center gap-2">
+              <Loader2 className="h-10 w-10 text-slate-500 animate-spin" />
+              <p className="text-sm text-slate-500">Uploading...</p>
+            </div>
+          ) : (
+            <>
+              <File className="h-10 w-10 text-slate-500" />
+              <p className="text-sm text-slate-500 mt-2">
+                Drag & drop or click to upload file
+              </p>
+            </>
+          )}
         </div>
       )}
     </div>
