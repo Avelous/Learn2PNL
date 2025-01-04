@@ -1,15 +1,14 @@
+import axios from "axios";
+
 export const getPreSignedUrl = async (
   filename: string,
   filetype: string,
   dir: string
 ) => {
-  const response = await fetch("/api/s3-upload", {
-    method: "POST",
-    body: JSON.stringify({
-      filename,
-      filetype,
-      dirInBucket: dir,
-    }),
+  const response = await axios.post("/api/s3-upload", {
+    filename,
+    filetype,
+    dirInBucket: dir,
   });
-  return response.json();
+  return response.data;
 };
