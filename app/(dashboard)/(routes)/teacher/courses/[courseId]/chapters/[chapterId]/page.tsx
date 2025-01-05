@@ -12,7 +12,7 @@ import ChapterAccessForm from "./_components/chapter-access-form";
 import ChapterVideoForm from "./_components/chapter-video-form";
 import Banner from "@/components/banner";
 import { ChapterActions } from "./_components/chapter-actions";
-import { mux } from "@/lib/mux";
+import { generatePlaybackToken } from "@/lib/mux";
 
 const ChapterIdPage = async ({
   params,
@@ -51,12 +51,7 @@ const ChapterIdPage = async ({
 
   const isComplete = requiredFields.every(Boolean);
 
-  const playbackToken = await mux.jwt.signPlaybackId(
-    chapter.muxData?.playbackId!,
-    {
-      type: "video",
-    }
-  );
+  const playbackToken = await generatePlaybackToken(chapter.muxData?.playbackId!);
 
   return (
     <>

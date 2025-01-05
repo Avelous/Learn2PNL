@@ -7,7 +7,7 @@ import CourseEnrollButton from "./_components/course-enroll-button";
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { CourseProgressButton } from "./_components/course-progress-button";
-import { mux } from "@/lib/mux";
+import { generatePlaybackToken } from "@/lib/mux";
 import { AttachmentLink } from "./_components/attachment-link";
 
 const ChapterIdPage = async ({
@@ -45,9 +45,7 @@ const ChapterIdPage = async ({
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
 
-  const playbackToken = await mux.jwt.signPlaybackId(muxData?.playbackId!, {
-    type: "video",
-  });
+  const playbackToken = await generatePlaybackToken(muxData?.playbackId!)
 
   return (
     <div>
