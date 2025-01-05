@@ -8,8 +8,6 @@ import { useRouter } from "next/navigation";
 import { Loader2, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
-import Mux from "@mux/mux-node";
-import next from "next";
 
 interface VideoPlayerProps {
   playbackId: string;
@@ -19,6 +17,7 @@ interface VideoPlayerProps {
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
+  playbackToken: string;
 }
 
 const VideoPlayer = ({
@@ -29,6 +28,7 @@ const VideoPlayer = ({
   isLocked,
   completeOnEnd,
   title,
+  playbackToken,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false);
   const router = useRouter();
@@ -42,7 +42,7 @@ const VideoPlayer = ({
           {
             isCompleted: true,
           }
-        ); 
+        );
       }
 
       if (!nextChapterId) {
@@ -56,7 +56,6 @@ const VideoPlayer = ({
       if (nextChapterId) {
         router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
       }
-
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -75,14 +74,20 @@ const VideoPlayer = ({
           <p className="text-sm">This chapter is locked</p>
         </div>
       )}
-      {!isLocked && (
+      {!isLocked && playbackToken && (
         <MuxPlayer
           title={title}
           className={cn(!isReady && "hidden")}
           onCanPlay={() => setIsReady(true)}
           onEnded={onEnd}
-          autoPlay
+          // autoPlay
           playbackId={playbackId}
+          tokens={{
+            playback: playbackToken,
+          }}
+          streamType="on-demand"
+          preferPlayback="mse"
+          thumbnailTime={0}
         />
       )}
     </div>

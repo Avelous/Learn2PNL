@@ -16,7 +16,6 @@ const iconMap: Record<Category["name"], IconType> = {
   Crypto: FaBitcoin,
 };
 
-// Loading fallback component
 const CategoriesLoader = () => {
   return (
     <div className="flex items-center gap-x-2 overflow-x-auto pb-2">

@@ -15,6 +15,7 @@ interface ChapterVideoFormProps {
   initialData: Chapter & { muxData?: MuxData | null };
   courseId: string;
   chapterId: string;
+  playbackToken: string;
 }
 
 const acceptedTypes = {
@@ -25,6 +26,7 @@ const ChapterVideoForm = ({
   initialData,
   courseId,
   chapterId,
+  playbackToken,
 }: ChapterVideoFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -100,7 +102,13 @@ const ChapterVideoForm = ({
           </div>
         ) : (
           <div className="relative aspect-video mt-2">
-            <MuxPlayer playbackId={initialData.muxData?.playbackId || ""} />
+            <MuxPlayer
+              playbackId={initialData.muxData?.playbackId || ""}
+              tokens={{
+                playback: playbackToken,
+              }}
+              preferPlayback="mse"
+            />
           </div>
         ))}
 

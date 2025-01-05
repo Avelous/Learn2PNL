@@ -13,7 +13,6 @@ export const getChapter = async ({
   chapterId,
 }: GetChapterProps) => {
   try {
-    // TODO: Check findunique with userId_courseId
     const purchase = await db.purchase.findFirst({
       where: {
         userId,

@@ -16,13 +16,12 @@ const Navbar = ({ userId }: NavbarProps) => {
     e.preventDefault();
     if (isOpen) {
       setIsOpen(false);
-      // Add a small delay to ensure the scroll happens after the sheet closes
       setTimeout(() => {
         const faqElement = document.querySelector("#faq");
         if (faqElement) {
           faqElement.scrollIntoView({ behavior: "smooth" });
         }
-      }, 300); // This matches shadcn's sheet animation duration
+      }, 300);
     } else {
       const faqElement = document.querySelector("#faq");
       if (faqElement) {
@@ -46,10 +45,7 @@ const Navbar = ({ userId }: NavbarProps) => {
       >
         Courses
       </Link>
-      <Link
-        href={userId ? "/dashboard" : "/sign-in"}
-        onClick={() => setIsOpen(false)}
-      >
+      <Link href={"/dashboard"} onClick={() => setIsOpen(false)}>
         <Button
           variant="outline"
           className="text-sky-700 hover:text-sky-700/50 border-sky-700 rounded-full"

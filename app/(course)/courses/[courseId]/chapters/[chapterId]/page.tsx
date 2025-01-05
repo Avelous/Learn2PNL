@@ -6,8 +6,9 @@ import VideoPlayer from "./_components/video-player";
 import CourseEnrollButton from "./_components/course-enroll-button";
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
-import { File } from "lucide-react";
 import { CourseProgressButton } from "./_components/course-progress-button";
+import { mux } from "@/lib/mux";
+import { AttachmentLink } from "./_components/attachment-link";
 
 const ChapterIdPage = async ({
   params,
@@ -44,6 +45,10 @@ const ChapterIdPage = async ({
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
 
+  const playbackToken = await mux.jwt.signPlaybackId(muxData?.playbackId!, {
+    type: "video",
+  });
+
   return (
     <div>
       {userProgress?.isCompleted && (
@@ -65,6 +70,7 @@ const ChapterIdPage = async ({
             playbackId={muxData?.playbackId!}
             isLocked={isLocked}
             completeOnEnd={completeOnEnd}
+            playbackToken={playbackToken}
           />
         </div>
         <div>
@@ -94,15 +100,11 @@ const ChapterIdPage = async ({
               <Separator />
               <div className="p-4 ">
                 {attachments.map((attachment) => (
-                  <a
-                    className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline text-xs"
-                    href={attachment.url}
+                  <AttachmentLink
                     key={attachment.id}
-                    target="_blank"
-                  >
-                    <File />
-                    <p className="line-clamp-a">{attachment.name}</p>
-                  </a>
+                    id={attachment.id}
+                    name={attachment.name}
+                  />
                 ))}
               </div>
             </>

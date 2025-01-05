@@ -3,7 +3,7 @@ import Navbar from "./_components/navbar";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-full bg-slate-100/60">
+    <div className="h-full bg-slate-100">
       <div className="h-[60px] md:pl-56 fixed inset-y-0 w-full z-50">
         <Navbar />
       </div>
