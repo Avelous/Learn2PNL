@@ -1,0 +1,7 @@
+{
+    "functions": {
+      "api/video-upload": {
+        "maxDuration": 60
+      }
+    }
+  }
