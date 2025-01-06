@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Loader2, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
+import CustomVideoPlayer from "../../../../../../../components/custom-video-player";
 
 interface VideoPlayerProps {
   playbackId: string;
@@ -18,6 +19,7 @@ interface VideoPlayerProps {
   completeOnEnd: boolean;
   title: string;
   playbackToken: string;
+  videoUrl: string;
 }
 
 const VideoPlayer = ({
@@ -29,6 +31,7 @@ const VideoPlayer = ({
   completeOnEnd,
   title,
   playbackToken,
+  videoUrl,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false);
   const router = useRouter();
@@ -75,19 +78,26 @@ const VideoPlayer = ({
         </div>
       )}
       {!isLocked && playbackToken && (
-        <MuxPlayer
-          title={title}
-          className={cn(!isReady && "hidden")}
-          onCanPlay={() => setIsReady(true)}
+        // <MuxPlayer
+        //   title={title}
+        //   className={cn(!isReady && "hidden")}
+        //   onCanPlay={() => setIsReady(true)}
+        //   onEnded={onEnd}
+        //   // autoPlay
+        //   playbackId={playbackId}
+        //   tokens={{
+        //     playback: playbackToken,
+        //   }}
+        //   streamType="on-demand"
+        //   preferPlayback="mse"
+        //   thumbnailTime={0}
+        // />
+        <CustomVideoPlayer
+          src={videoUrl}
+          onReady={() => setIsReady(true)}
           onEnded={onEnd}
-          // autoPlay
-          playbackId={playbackId}
-          tokens={{
-            playback: playbackToken,
-          }}
-          streamType="on-demand"
-          preferPlayback="mse"
-          thumbnailTime={0}
+          className={cn(!isReady && "hidden")}
+          title={title}
         />
       )}
     </div>

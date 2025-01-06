@@ -10,6 +10,7 @@ import { Chapter, MuxData } from "@prisma/client";
 import { useDropzone } from "react-dropzone";
 import { getPreSignedUrl } from "@/lib/s3";
 import MuxPlayer from "@mux/mux-player-react";
+import CustomVideoPlayer from "@/components/custom-video-player";
 
 interface ChapterVideoFormProps {
   initialData: Chapter & { muxData?: MuxData | null };
@@ -41,23 +42,18 @@ const ChapterVideoForm = ({
     setIsUploading(true);
 
     try {
-      const { url, newFileName } = await getPreSignedUrl(
-        file.name,
-        file.type,
-        `${courseId}/${chapterId}`
-      );
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("courseId", courseId);
+      formData.append("chapterId", chapterId);
 
-      await axios.put(url, file, {
-        headers: { "Content-Type": file.type },
-      });
-
-      const videoUrl = `${process.env.NEXT_PUBLIC_S3_URL}/${newFileName}`;
+      const response = await axios.post("/api/video-upload", formData);
 
       await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, {
-        videoUrl,
+        videoUrl: response.data.videoUrl,
       });
 
-      toast.success("Video uploaded successfully");
+      toast.success("Video uploaded and processed successfully");
       toggleEdit();
       router.refresh();
     } catch (error) {
@@ -66,7 +62,6 @@ const ChapterVideoForm = ({
       setIsUploading(false);
     }
   };
-
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: acceptedTypes,
@@ -102,13 +97,15 @@ const ChapterVideoForm = ({
           </div>
         ) : (
           <div className="relative aspect-video mt-2">
-            <MuxPlayer
+            {/* <MuxPlayer
               playbackId={initialData.muxData?.playbackId || ""}
               tokens={{
                 playback: playbackToken,
               }}
               preferPlayback="mse"
-            />
+            /> */}
+
+            <CustomVideoPlayer src={initialData.videoUrl} />
           </div>
         ))}
 

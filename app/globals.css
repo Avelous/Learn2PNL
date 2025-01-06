@@ -78,3 +78,73 @@ body,
   font-size: 16px !important;
 }
 @import "~@uploadthing/react/styles.css";
+
+/* Add this to your global CSS file */
+.video-js .vjs-rewind-30,
+.video-js .vjs-forward-30 {
+  cursor: pointer;
+  width: 3em;
+  position: relative;
+}
+
+.video-js .vjs-rewind-30 .vjs-icon-placeholder,
+.video-js .vjs-forward-30 .vjs-icon-placeholder {
+  font-size: 1.8em;
+  line-height: 1.67;
+}
+
+/* Quality selector styles */
+.video-js .vjs-quality-selector {
+  margin-right: 1em;
+}
+
+.video-js .vjs-quality-selector .vjs-menu-button {
+  margin: 0;
+  padding: 0;
+}
+
+.vjs-quality-selector .vjs-menu-content {
+  background: rgba(43, 51, 63, 0.7);
+  border-radius: 2px;
+  padding: 0.5em 0;
+}
+
+/* Playback rate menu positioning */
+.video-js .vjs-playback-rate .vjs-menu {
+  width: 8em;
+  left: -2em;
+}
+
+.video-js .vjs-playback-rate .vjs-menu-content {
+  bottom: 1.5em !important;
+  background-color: rgba(43, 51, 63, 0.7);
+}
+
+/* Hide download button from context menu */
+.video-js .vjs-menu-button-popup .vjs-menu .vjs-menu-content li:last-child {
+  display: none;
+}
+
+/* Custom theme colors */
+.video-js {
+  --vjs-theme-color: #3b82f6;
+}
+
+.video-js .vjs-big-play-button {
+  background-color: rgba(59, 130, 246, 0.7);
+  border-color: #3b82f6;
+}
+
+.video-js .vjs-slider {
+  background-color: rgba(59, 130, 246, 0.4);
+}
+
+.video-js .vjs-play-progress,
+.video-js .vjs-volume-level {
+  background-color: #3b82f6;
+}
+
+/* Menu item hover states */
+.video-js .vjs-menu-button-popup .vjs-menu .vjs-menu-content li:hover {
+  background-color: rgba(59, 130, 246, 0.6);
+}
