@@ -45,7 +45,7 @@ const ChapterIdPage = async ({
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
 
-  const playbackToken = await generatePlaybackToken(muxData?.playbackId!)
+  const playbackToken = await generatePlaybackToken(muxData?.playbackId!);
 
   return (
     <div>
@@ -69,6 +69,7 @@ const ChapterIdPage = async ({
             isLocked={isLocked}
             completeOnEnd={completeOnEnd}
             playbackToken={playbackToken}
+            videoUrl={chapter.videoUrl!}
           />
         </div>
         <div>

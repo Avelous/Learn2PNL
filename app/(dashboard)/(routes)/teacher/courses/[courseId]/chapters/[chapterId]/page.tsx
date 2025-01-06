@@ -51,7 +51,9 @@ const ChapterIdPage = async ({
 
   const isComplete = requiredFields.every(Boolean);
 
-  const playbackToken = await generatePlaybackToken(chapter.muxData?.playbackId!);
+  const playbackToken = await generatePlaybackToken(
+    chapter.muxData?.playbackId!
+  );
 
   return (
     <>
