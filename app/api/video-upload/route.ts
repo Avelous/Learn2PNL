@@ -3,18 +3,9 @@ import { auth } from "@clerk/nextjs/server";
 import { VideoProcessor } from "@/lib/video-processor";
 
 // Increase the body size limit for the API route
-
 export const runtime = "edge";
-
-export const config = {
-  runtime: "edge",
-  api: {
-    bodyParser: {
-      sizeLimit: "100mb", // Adjust this based on your needs
-    },
-    responseLimit: false,
-  },
-};
+export const maxDuration = 300; // 5 minutes
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
