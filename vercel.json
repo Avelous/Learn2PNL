@@ -1,7 +1,0 @@
-{
-    "functions": {
-      "api/video-upload/**/*.ts": {
-        "maxDuration": 60
-      }
-    }
-  }

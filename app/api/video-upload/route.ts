@@ -5,7 +5,7 @@ import { MediaConvertProcessor } from "@/lib/media-convert";
 
 // Switch to Node.js runtime for AWS SDK compatibility
 export const runtime = "nodejs";
-export const maxDuration = 300; // 5 minutes
+export const maxDuration = 60; // 5 minutes
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
