@@ -1,6 +1,6 @@
 {
     "functions": {
-      "api/video-upload": {
+      "api/video-upload/*ts": {
         "maxDuration": 60
       }
     }
