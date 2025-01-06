@@ -1,13 +1,14 @@
-import { NextResponse } from "next/server";
+// app/api/video-upload/route.ts
+import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { VideoProcessor } from "@/lib/video-processor";
+import { MediaConvertProcessor } from "@/lib/media-convert";
 
-// Increase the body size limit for the API route
-export const runtime = "edge";
+// Switch to Node.js runtime for AWS SDK compatibility
+export const runtime = "nodejs";
 export const maxDuration = 300; // 5 minutes
 export const dynamic = "force-dynamic";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { userId } = await auth();
     if (!userId) {
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
       return new NextResponse("Missing required fields", { status: 400 });
     }
 
-    // Add basic file validation
+    // Enhanced file validation
     const maxSize = 500 * 1024 * 1024; // 500MB
     if (file.size > maxSize) {
       return new NextResponse("File too large. Maximum size is 500MB", {
@@ -39,23 +40,36 @@ export async function POST(req: Request) {
       );
     }
 
-    // Convert file to buffer
     const buffer = Buffer.from(await file.arrayBuffer());
-
-    // Process video and generate HLS streams
-    const videoProcessor = new VideoProcessor();
-    const hlsUrl = await videoProcessor.processVideo(
+    const processor = new MediaConvertProcessor();
+    
+    // Get both URL and jobId from the processor
+    const { url: videoUrl, jobId } = await processor.processVideo(
       buffer,
       courseId,
       chapterId
     );
 
-    return NextResponse.json({ videoUrl: hlsUrl });
+    return NextResponse.json({ 
+      videoUrl,
+      jobId,
+      status: 'SUBMITTED',
+      message: 'Video processing started successfully'
+    });
   } catch (error) {
     console.error("Error processing video:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
     return new NextResponse(
-      "Error processing video. Please try again with a smaller file or contact support.",
-      { status: 500 }
+      JSON.stringify({
+        error: errorMessage,
+        message: "Error processing video. Please try again or contact support."
+      }),
+      { 
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
     );
   }
 }
