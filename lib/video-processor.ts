@@ -1,9 +1,8 @@
 import ffmpeg from "fluent-ffmpeg";
 import { S3 } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import { Readable } from "stream";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 // Initialize S3 with extended timeout and proper configuration
 const s3 = new S3({
@@ -114,7 +113,6 @@ export class VideoProcessor {
           resolve();
         })
         .on("error", (err: Error) => {
-         
           reject(err);
         })
         .run();
