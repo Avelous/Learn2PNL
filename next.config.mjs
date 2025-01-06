@@ -13,17 +13,11 @@ const nextConfig = {
       "learn2pnl.s3.us-east-1.amazonaws.com",
     ],
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     config.externals = [
       ...(config.externals || []),
       "@aws-sdk/signature-v4-multi-region",
     ];
-    if (!isServer) {
-      config.resolve.fallback = {
-        fs: false,
-        path: false,
-      };
-    }``
     return config;
   },
 };
