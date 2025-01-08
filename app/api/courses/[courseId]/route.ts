@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node";
@@ -73,7 +73,7 @@ export async function PATCH(
     const { courseId } = params;
     const values = await req.json();
 
-    if (!userId ) {
+    if (!userId) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
 

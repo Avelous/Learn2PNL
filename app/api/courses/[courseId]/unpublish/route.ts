@@ -1,5 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
@@ -29,7 +29,6 @@ export async function PATCH(
     if (!course) {
       return new NextResponse("Not found", { status: 404 });
     }
-  
 
     const unPublishedCourse = await db.course.update({
       where: {

@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { Attachment, Chapter } from "@prisma/client";
 
 interface GetChapterProps {
@@ -88,7 +88,7 @@ export const getChapter = async ({
       attachments,
       nextChapter,
       userProgress,
-      purchase
+      purchase,
     };
   } catch (error) {
     console.log("[GET_CHAPTER]", error);

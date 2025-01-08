@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { isTeacher } from "@/lib/teacher";
 
 export async function POST(req: Request) {
@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const { userId } = await auth();
     const { title } = await req.json();
 
-    if (!userId || !isTeacher(userId) ) {
+    if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
 
@@ -20,7 +20,6 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(course);
-    
   } catch (error) {
     console.log("[COURSES]", error);
     return new NextResponse("Internal Error", { status: 500 });

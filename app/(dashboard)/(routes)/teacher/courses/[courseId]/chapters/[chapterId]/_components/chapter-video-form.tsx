@@ -129,6 +129,7 @@ const ChapterVideoForm = ({
       setProcessingProgress(20); // Initial progress after upload
 
       toast.success("Video uploaded successfully and is now processing");
+      router.refresh()
     } catch (error) {
       console.error("Upload error:", error);
       toast.error("Error uploading video");

@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import Categories from "./_components/categories";
 import { getCourses } from "@/actions/get-courses";
 import { auth } from "@clerk/nextjs/server";

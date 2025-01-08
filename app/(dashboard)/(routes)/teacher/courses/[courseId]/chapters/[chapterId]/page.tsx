@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import { IconBadge } from "@/components/icon-badge";
 import ChapterTitleForm from "./_components/chapter-title-form";

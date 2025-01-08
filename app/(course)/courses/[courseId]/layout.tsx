@@ -1,5 +1,5 @@
 import { getProgress } from "@/actions/get-progress";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import CourseSidebar from "./_components/course-sidebar";

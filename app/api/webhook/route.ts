@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -47,5 +47,5 @@ export async function POST(req: Request) {
     );
   }
 
-    return new NextResponse(null, { status: 200 });
+  return new NextResponse(null, { status: 200 });
 }

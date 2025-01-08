@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 import { currentUser } from "@clerk/nextjs/server";
 import { url } from "inspector";
