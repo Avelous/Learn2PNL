@@ -5,7 +5,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
     <div
       className="h-full flex items-center justify-center 
     bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-400 to-sky-400
-    "
+     p-6"
     >
       {children}
     </div>

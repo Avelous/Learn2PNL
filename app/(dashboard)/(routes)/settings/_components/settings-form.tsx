@@ -78,7 +78,7 @@ export const SettingsForm = ({ user }: SettingsFormProps) => {
   };
 
   return (
-    <Card className="w-[600px]">
+    <Card className="max-w-xl">
       <CardHeader>
         <p className=" font-semibold">Update information</p>
       </CardHeader>
