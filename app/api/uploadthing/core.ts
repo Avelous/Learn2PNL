@@ -1,6 +1,5 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { currentUser } from "@/lib/auth";
-import { isTeacher } from "@/lib/teacher";
 import { UserRole } from "@prisma/client";
 
 const f = createUploadthing();
