@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
@@ -22,9 +22,9 @@ const ChapterIdPage = async ({
     chapterId: string;
   };
 }) => {
-  const { userId } = await auth();
+  const user = await currentUser();
 
-  if (!userId) {
+  if (!user) {
     return redirect("/");
   }
 

@@ -1,16 +1,16 @@
 "use client";
 
-import { useAuth, UserButton } from "@clerk/nextjs";
+import { useCurrentUser } from "@/hooks/use-current-user";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { LogOut } from "lucide-react";
 import SearchInput from "./search-input";
-
-import { isTeacher } from "@/lib/teacher";
+import { UserButton } from "@/components/user-button";
+import { UserRole } from "@prisma/client";
 
 const NavbarRoutes = () => {
-  const { userId } = useAuth();
+  const user = useCurrentUser();
   const pathName = usePathname();
 
   const isTeacherPage = pathName?.startsWith("/teacher");
@@ -32,14 +32,14 @@ const NavbarRoutes = () => {
               Exit
             </Button>
           </Link>
-        ) : isTeacher(userId) ? (
+        ) : user?.role === UserRole.ADMIN ? (
           <Link href="/teacher/courses">
             <Button size="sm" variant="ghost">
               Teacher Mode
             </Button>
           </Link>
         ) : null}
-        <UserButton afterSwitchSessionUrl="/dashboard" />
+        <UserButton />
       </div>
     </>
   );

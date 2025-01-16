@@ -1,12 +1,12 @@
-import { auth } from "@clerk/nextjs/server";
 import React from "react";
-import { isTeacher } from "@/lib/teacher";
 import { redirect } from "next/navigation";
+import { currentUser } from "@/lib/auth";
+import { UserRole } from "@prisma/client";
 
 const TeacherLayout = async ({ children }: { children: React.ReactNode }) => {
-  const { userId } = await auth();
+  const user = await currentUser();
 
-  if (!isTeacher(userId)) {
+  if (user?.role !== UserRole.ADMIN) {
     return redirect("/");
   }
 

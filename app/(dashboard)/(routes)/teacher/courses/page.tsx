@@ -1,15 +1,17 @@
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import db from "@/lib/db";
 
 const CoursePage = async () => {
-  const { userId } = await auth();
+  const user = await currentUser();
 
-  if (!userId) {
+  if (!user) {
     return redirect("/");
   }
+
+  const { id: userId } = user;
 
   const courses = await db.course.findMany({
     where: {

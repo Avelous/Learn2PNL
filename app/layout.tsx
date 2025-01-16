@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 import ToasterProvider from "@/components/providers/toaster.provider";
 import { ConfettiProvider } from "@/components/providers/confetti.provider";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,13 +13,15 @@ export const metadata: Metadata = {
   description: "Secure profits and cut losses",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
-    <ClerkProvider afterSignOutUrl={"/"}>
+    <SessionProvider session={session}>
       <html lang="en">
         <body className={inter.className}>
           <ConfettiProvider />
@@ -26,6 +29,6 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-    </ClerkProvider>
+    </SessionProvider>
   );
 }

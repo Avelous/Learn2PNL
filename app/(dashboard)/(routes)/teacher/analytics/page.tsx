@@ -1,17 +1,17 @@
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { getAnalytics } from "@/actions/get-analytics";
+import { getAnalytics } from "@/actions/course/get-analytics";
 import { DataCard } from "./_components/data-card";
 import { Chart } from "./_components/chart";
 
 const AnalyticsPage = async () => {
-  const { userId } = await auth();
+  const user = await currentUser();
 
-  if (!userId) {
+  if (!user) {
     redirect("/");
   }
 
-  const { data, totalRevenue, totalSales } = await getAnalytics(userId);
+  const { data, totalRevenue, totalSales } = await getAnalytics(user?.id!);
 
   return (
     <div className="p-6 ">

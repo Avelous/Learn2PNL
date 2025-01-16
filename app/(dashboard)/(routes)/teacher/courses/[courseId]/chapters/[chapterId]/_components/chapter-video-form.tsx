@@ -114,22 +114,19 @@ const ChapterVideoForm = ({
       formData.append("courseId", courseId);
       formData.append("chapterId", chapterId);
 
-      // Upload the video and get processing details
       const response = await axios.post("/api/video-upload", formData);
       const { videoUrl, jobId: newJobId } = response.data;
 
-      // Update chapter with the pending video URL
       await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, {
         videoUrl: videoUrl,
       });
 
-      // Start tracking the processing status
       setJobId(newJobId);
       setStatus("processing");
-      setProcessingProgress(20); // Initial progress after upload
+      setProcessingProgress(20);
 
       toast.success("Video uploaded successfully and is now processing");
-      router.refresh()
+      router.refresh();
     } catch (error) {
       console.error("Upload error:", error);
       toast.error("Error uploading video");

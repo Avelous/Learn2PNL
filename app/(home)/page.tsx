@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import { features } from "@/data/data";
 
-import { useAuth } from "@clerk/nextjs";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 import { Testimonials } from "./_components/testimonials";
 import { Button } from "@/components/ui/button";
@@ -17,11 +17,11 @@ import { Users, TvMinimalPlay, Trophy } from "lucide-react";
 import { discordUrl } from "@/data/constants";
 
 export default function LandingPage() {
-  const { userId } = useAuth();
+  const user = useCurrentUser();
 
   return (
     <div className="min-h-screen text-sm">
-      <Navbar userId={userId as string} />
+      <Navbar />
 
       <div className="relative max-w-7xl mx-auto px-4 pt-16 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -140,9 +140,7 @@ export default function LandingPage() {
             <strong> Act fast!</strong> Join our community and learn from
             experienced traders
           </p>
-          <Link href={discordUrl}
-          target="_"
-          >
+          <Link href={discordUrl} target="_">
             <Button className="bg-sky-500 hover:bg-sky-500/50">
               Gain Access
             </Button>

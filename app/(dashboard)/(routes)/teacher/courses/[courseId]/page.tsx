@@ -1,6 +1,6 @@
 import React from "react";
 import db from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { IconBadge } from "@/components/icon-badge";
 import {
@@ -21,14 +21,14 @@ import Banner from "@/components/banner";
 import { Actions } from "./_components/actions";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-  const { userId } = await auth();
-  if (!userId) {
+  const user = await currentUser();
+  if (!user) {
     return redirect("/");
   }
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
-      userId,
+      userId: user.id,
     },
     include: {
       chapters: {

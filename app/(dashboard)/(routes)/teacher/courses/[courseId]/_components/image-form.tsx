@@ -65,7 +65,6 @@ const ImageForm = ({ initialData, courseId, fileType }: ImageFormProps) => {
       });
 
       const imageUrl = `${process.env.NEXT_PUBLIC_S3_URL}/${newFileName}`;
-      console.log(imageUrl);
 
       await axios.patch(`/api/courses/${courseId}`, { imageUrl });
 

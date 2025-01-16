@@ -1,6 +1,6 @@
 // app/api/video-upload/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@/lib/auth";
 import { MediaConvertProcessor } from "@/lib/media-convert";
 
 // Switch to Node.js runtime for AWS SDK compatibility
@@ -10,8 +10,8 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
+    const user = await currentUser();
+    if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const processor = new MediaConvertProcessor();
-    
+
     // Get both URL and jobId from the processor
     const { url: videoUrl, jobId } = await processor.processVideo(
       buffer,
@@ -50,25 +50,26 @@ export async function POST(req: NextRequest) {
       chapterId
     );
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       videoUrl,
       jobId,
-      status: 'SUBMITTED',
-      message: 'Video processing started successfully'
+      status: "SUBMITTED",
+      message: "Video processing started successfully",
     });
   } catch (error) {
     console.error("Error processing video:", error);
-    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
     return new NextResponse(
       JSON.stringify({
         error: errorMessage,
-        message: "Error processing video. Please try again or contact support."
+        message: "Error processing video. Please try again or contact support.",
       }),
-      { 
+      {
         status: 500,
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       }
     );
   }

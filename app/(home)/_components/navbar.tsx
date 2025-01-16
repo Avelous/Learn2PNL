@@ -5,11 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
 
-interface NavbarProps {
-  userId: string;
-}
-
-const Navbar = ({ userId }: NavbarProps) => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleScroll = (e: React.MouseEvent) => {
@@ -51,7 +47,7 @@ const Navbar = ({ userId }: NavbarProps) => {
           className="text-sky-700 hover:text-sky-700/50 border-sky-700 rounded-full"
         >
           <User className="h-4 w-4 mr-2" />
-          {userId ? "Dashboard" : "Sign In"}
+          {"Dashboard"}
         </Button>
       </Link>
     </>

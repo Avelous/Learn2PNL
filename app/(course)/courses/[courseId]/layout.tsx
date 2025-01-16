@@ -1,6 +1,6 @@
-import { getProgress } from "@/actions/get-progress";
+import { getProgress } from "@/actions/course/get-progress";
 import db from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import CourseSidebar from "./_components/course-sidebar";
 import CourseNavbar from "./_components/course-navbar";
@@ -14,8 +14,9 @@ const CourseLayout = async ({
     courseId: string;
   };
 }) => {
-  const { userId } = await auth();
-  if (!userId) {
+  const user = await currentUser();
+
+  if (!user) {
     return redirect("/");
   }
 
@@ -31,7 +32,7 @@ const CourseLayout = async ({
         include: {
           userProgress: {
             where: {
-              userId,
+              id: user.id!,
             },
           },
         },
@@ -46,7 +47,7 @@ const CourseLayout = async ({
     return redirect("/");
   }
 
-  const progressCount = await getProgress(userId, course.id);
+  const progressCount = await getProgress(user.id!, course.id);
 
   return (
     <div className="h-full">

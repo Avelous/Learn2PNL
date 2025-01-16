@@ -1,5 +1,5 @@
 import db from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node";
 
@@ -19,17 +19,18 @@ export async function DELETE(
   }
 ) {
   try {
-    const { userId } = await auth();
+    const user = await currentUser();
+
     const { courseId } = params;
 
-    if (!userId) {
+    if (!user) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
 
     const course = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId: userId,
+        userId: user.id,
       },
       include: {
         chapters: {
@@ -53,7 +54,7 @@ export async function DELETE(
     const deletedCourse = await db.course.delete({
       where: {
         id: courseId,
-        userId,
+        userId: user.id,
       },
     });
 
@@ -69,18 +70,18 @@ export async function PATCH(
   { params }: { params: { courseId: string } }
 ) {
   try {
-    const { userId } = await auth();
+    const user = await currentUser();
     const { courseId } = params;
     const values = await req.json();
 
-    if (!userId) {
+    if (!user) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
 
     const course = await db.course.update({
       where: {
         id: courseId,
-        userId,
+        userId: user.id,
       },
       data: {
         ...values,

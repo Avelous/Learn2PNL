@@ -1,15 +1,17 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@/lib/auth";
 import { isTeacher } from "@/lib/teacher";
+import { UserRole } from "@prisma/client";
 
 const f = createUploadthing();
 
 const handleAuth = async () => {
-  const { userId } = await auth();
-  const isAuthorized = isTeacher(userId);
+  const user = await currentUser();
+  const isAuthorized = user?.role === UserRole.ADMIN;
 
-  if (!userId || !isAuthorized) throw new Error("Unauthorized");
-  return { userId };
+  if (!user || !isAuthorized) throw new Error("Unauthorized");
+  const id = user?.id;
+  return { id };
 };
 
 export const ourFileRouter = {
