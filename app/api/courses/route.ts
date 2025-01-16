@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const user = await currentUser();
     const { title } = await req.json();
 
-    if (!user || user.role !== UserRole.ADMIN) {
+    if (!user || user.role !== UserRole.TEACHER) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
 

@@ -6,7 +6,7 @@ import { UserRole } from "@prisma/client";
 const TeacherLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser();
 
-  if (user?.role !== UserRole.ADMIN) {
+  if (user?.role !== UserRole.TEACHER) {
     return redirect("/");
   }
 

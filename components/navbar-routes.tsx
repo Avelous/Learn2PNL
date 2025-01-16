@@ -32,7 +32,7 @@ const NavbarRoutes = () => {
               Exit
             </Button>
           </Link>
-        ) : user?.role === UserRole.ADMIN ? (
+        ) : user?.role === UserRole.TEACHER ? (
           <Link href="/teacher/courses">
             <Button size="sm" variant="ghost">
               Teacher Mode

@@ -6,7 +6,7 @@ const f = createUploadthing();
 
 const handleAuth = async () => {
   const user = await currentUser();
-  const isAuthorized = user?.role === UserRole.ADMIN;
+  const isAuthorized = user?.role === UserRole.TEACHER;
 
   if (!user || !isAuthorized) throw new Error("Unauthorized");
   const id = user?.id;
