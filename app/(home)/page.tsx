@@ -66,12 +66,11 @@ export default function LandingPage() {
 
           <div className="relative">
             <div className="aspect-video bg-white rounded-lg shadow-lg overflow-hidden">
-              <Image
-                src="/course.png"
-                alt="Course preview"
-                width={800}
-                height={500}
-                className="w-full h-full object-cover"
+              <div
+                className="w-full h-full bg-cover bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: `url('/course.png')`,
+                }}
               />
             </div>
           </div>
