@@ -1,14 +1,16 @@
+import { redirect } from "next/navigation";
+
 import { getChapter } from "@/actions/course/get-chapter";
 import Banner from "@/components/banner";
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import VideoPlayer from "./_components/video-player";
-import CourseEnrollButton from "./_components/course-enroll-button";
-import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
-import { CourseProgressButton } from "./_components/course-progress-button";
+import { Separator } from "@/components/ui/separator";
+import { currentUser } from "@/lib/auth";
 import { generatePlaybackToken } from "@/lib/mux";
+
 import { AttachmentLink } from "./_components/attachment-link";
+import CourseEnrollButton from "./_components/course-enroll-button";
+import { CourseProgressButton } from "./_components/course-progress-button";
+import VideoPlayer from "./_components/video-player";
 
 const ChapterIdPage = async ({
   params,
@@ -24,7 +26,7 @@ const ChapterIdPage = async ({
     return redirect("/");
   }
 
-  const  userId  = user.id!;
+  const userId = user.id!;
 
   const {
     chapter,

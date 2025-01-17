@@ -1,7 +1,8 @@
+import { UserRole } from "@prisma/client";
 import { NextResponse } from "next/server";
+
 import { currentUser } from "@/lib/auth";
 import db from "@/lib/db";
-import { UserRole } from "@prisma/client";
 
 export async function POST(req: Request) {
   try {

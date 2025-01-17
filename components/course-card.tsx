@@ -4,9 +4,11 @@ import { BookOpen, Cat } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { IconBadge } from "./icon-badge";
+
 import { formatPrice } from "@/lib/format";
+
 import { CourseProgress } from "./course-progress";
+import { IconBadge } from "./icon-badge";
 
 interface CourseCardProps {
   id: string;

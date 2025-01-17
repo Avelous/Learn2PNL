@@ -1,16 +1,15 @@
 "use client";
 
-import { ImageIcon, Pencil, PlusCircle, Loader2 } from "lucide-react";
+import { Course } from "@prisma/client";
 import axios from "axios";
+import { ImageIcon, Pencil, PlusCircle, Loader2 } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { Course } from "@prisma/client";
-import Image from "next/image";
-import { useDropzone } from "react-dropzone";
-
 import { getPreSignedUrl } from "@/lib/s3";
 
 interface ImageFormProps {

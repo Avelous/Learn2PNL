@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import Link from "next/link";
 import { Menu, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,11 +62,11 @@ const Navbar = () => {
             <Image
               src="/logo.svg"
               alt="Learn2PNL Logo"
-              width={32}
-              height={32}
-              className="mr-2"
+              width={24}
+              height={24}
+              className=""
             />
-            <h1 className="text-lg font-bold text-sky-700">Learn2PNL</h1>
+            <h1 className="text-lg font-bold text-sky-700 ml-1">Learn2PNL</h1>
           </div>
 
           {/* Desktop Navigation */}

@@ -1,13 +1,15 @@
 "use client";
 
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
-import Link from "next/link";
-import { LogOut } from "lucide-react";
-import SearchInput from "./search-input";
-import { UserButton } from "@/components/user-button";
 import { UserRole } from "@prisma/client";
+import { LogOut } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { UserButton } from "@/components/user-button";
+import { useCurrentUser } from "@/hooks/use-current-user";
+
+import SearchInput from "./search-input";
+import { Button } from "./ui/button";
 
 const NavbarRoutes = () => {
   const user = useCurrentUser();

@@ -1,6 +1,8 @@
 import React from "react";
-import { Progress } from "./ui/progress";
+
 import { cn } from "@/lib/utils";
+
+import { Progress } from "./ui/progress";
 
 interface CourseProgressProps {
   variant: "success" | "default";

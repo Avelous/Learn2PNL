@@ -1,7 +1,8 @@
-import React from "react";
-import { redirect } from "next/navigation";
-import { currentUser } from "@/lib/auth";
 import { UserRole } from "@prisma/client";
+import { redirect } from "next/navigation";
+import React from "react";
+
+import { currentUser } from "@/lib/auth";
 
 const TeacherLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser();

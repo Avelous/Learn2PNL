@@ -1,13 +1,14 @@
 "use client";
 
-import { File, Loader2, PlusCircle, X } from "lucide-react";
-import axios from "axios";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { Attachment, Course } from "@prisma/client";
+import axios from "axios";
+import { File, Loader2, PlusCircle, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
+
+import { Button } from "@/components/ui/button";
 import { getPreSignedUrl } from "@/lib/s3";
 
 interface AttachmentFormProps {

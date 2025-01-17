@@ -1,10 +1,12 @@
-import db from "@/lib/db";
-import Categories from "./_components/categories";
-import { getCourses } from "@/actions/course/get-courses";
 import { redirect } from "next/navigation";
+
+import { getCourses } from "@/actions/course/get-courses";
 import CoursesList from "@/components/courses-list";
 import SearchInput from "@/components/search-input";
 import { currentUser } from "@/lib/auth";
+import db from "@/lib/db";
+
+import Categories from "./_components/categories";
 
 interface SearchPageProps {
   searchParams: {

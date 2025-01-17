@@ -1,8 +1,10 @@
-import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+
 import { getAnalytics } from "@/actions/course/get-analytics";
-import { DataCard } from "./_components/data-card";
+import { currentUser } from "@/lib/auth";
+
 import { Chart } from "./_components/chart";
+import { DataCard } from "./_components/data-card";
 
 const AnalyticsPage = async () => {
   const user = await currentUser();

@@ -1,8 +1,9 @@
+import Image from "next/image";
 import React from "react";
 
-import Image from "next/image";
-import { SocialLink } from "./social-link";
 import { discordUrl } from "@/data/constants";
+
+import { SocialLink } from "./social-link";
 
 const currentYear = new Date().getFullYear();
 
@@ -11,17 +12,17 @@ const Footer = () => {
     <footer className="border-t border-gray-200 bg-white">
       <div className="max-w-7xl mx-auto px-8 sm:px-10 lg:px-12 py-8">
         <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center">
             <Image
               src="/logo.svg"
               alt="Learn2PNL Logo"
-              width={32}
-              height={32}
+              width={20}
+              height={20}
             />
-            <span className="text-sm font-semibold text-sky-700">
+            <span className="text-sm font-semibold text-sky-700 ml-1">
               Learn2PNL
             </span>
-            <span className="text-sky-700 text-xs"> © {currentYear}</span>
+            <span className="text-sky-600 text-xs ml-2"> © {currentYear}</span>
           </div>
 
           <div className="flex items-center space-x-3">

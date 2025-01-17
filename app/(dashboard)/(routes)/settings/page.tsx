@@ -1,6 +1,8 @@
-import { currentUser } from "@/lib/auth";
-import { SettingsForm } from "./_components/settings-form";
 import { redirect } from "next/navigation";
+
+import { currentUser } from "@/lib/auth";
+
+import { SettingsForm } from "./_components/settings-form";
 
 const SettingsPage = async () => {
   const user = await currentUser();

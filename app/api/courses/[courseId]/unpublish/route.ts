@@ -1,6 +1,7 @@
+import { NextResponse } from "next/server";
+
 import { currentUser } from "@/lib/auth";
 import db from "@/lib/db";
-import { NextResponse } from "next/server";
 
 export async function PATCH(
   req: Request,

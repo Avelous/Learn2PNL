@@ -1,18 +1,19 @@
-import React from "react";
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import Link from "next/link";
-
-import db from "@/lib/db";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
-import { IconBadge } from "@/components/icon-badge";
-import ChapterTitleForm from "./_components/chapter-title-form";
-import ChapterDescriptionForm from "./_components/chapter-description-form";
-import ChapterAccessForm from "./_components/chapter-access-form";
-import ChapterVideoForm from "./_components/chapter-video-form";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import React from "react";
+
 import Banner from "@/components/banner";
-import { ChapterActions } from "./_components/chapter-actions";
+import { IconBadge } from "@/components/icon-badge";
+import { currentUser } from "@/lib/auth";
+import db from "@/lib/db";
 import { generatePlaybackToken } from "@/lib/mux";
+
+import ChapterAccessForm from "./_components/chapter-access-form";
+import { ChapterActions } from "./_components/chapter-actions";
+import ChapterDescriptionForm from "./_components/chapter-description-form";
+import ChapterTitleForm from "./_components/chapter-title-form";
+import ChapterVideoForm from "./_components/chapter-video-form";
 
 const ChapterIdPage = async ({
   params,

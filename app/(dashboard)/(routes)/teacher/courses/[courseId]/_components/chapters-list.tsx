@@ -1,16 +1,17 @@
 "use client";
 
-import { Chapter } from "@prisma/client";
-import { useEffect, useState } from "react";
 import {
   DragDropContext,
   Droppable,
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { cn } from "@/lib/utils";
+import { Chapter } from "@prisma/client";
 import { Grip, Pencil } from "lucide-react";
+import { useEffect, useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface ChaptersListProps {
   items: Chapter[];

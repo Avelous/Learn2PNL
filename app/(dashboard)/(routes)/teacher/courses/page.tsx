@@ -1,8 +1,10 @@
-import { DataTable } from "./_components/data-table";
-import { columns } from "./_components/columns";
-import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+
+import { currentUser } from "@/lib/auth";
 import db from "@/lib/db";
+
+import { columns } from "./_components/columns";
+import { DataTable } from "./_components/data-table";
 
 const CoursePage = async () => {
   const user = await currentUser();

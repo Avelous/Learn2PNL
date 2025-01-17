@@ -1,10 +1,12 @@
-import { currentUser } from "@/lib/auth";
 import { Course, Chapter, UserProgress, Purchase } from "@prisma/client";
 import { redirect } from "next/navigation";
 import React from "react";
-import db from "@/lib/db";
-import CourseSidebarItem from "./course-sidebar-item";
+
 import { CourseProgress } from "@/components/course-progress";
+import { currentUser } from "@/lib/auth";
+import db from "@/lib/db";
+
+import CourseSidebarItem from "./course-sidebar-item";
 
 interface CourseSidebarProps {
   course: Course & {

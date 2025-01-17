@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import { SettingsSchema } from "@/schemas";
+import { UserRole } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 import { settings } from "@/actions/auth/settings";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
@@ -28,14 +31,9 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { useTransition } from "react";
-import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
-
-import { FormSuccess } from "@/components/form-success";
-import { FormError } from "@/components/form-error";
-import { UserRole } from "@prisma/client";
 import { ExtendedUser } from "@/next-auth";
+import { SettingsSchema } from "@/schemas";
 
 interface SettingsFormProps {
   user: ExtendedUser;
@@ -177,7 +175,9 @@ export const SettingsForm = ({ user }: SettingsFormProps) => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value={UserRole.TEACHER}>Teacher</SelectItem>
+                        <SelectItem value={UserRole.TEACHER}>
+                          Teacher
+                        </SelectItem>
                         <SelectItem value={UserRole.USER}>User</SelectItem>
                       </SelectContent>
                     </Select>

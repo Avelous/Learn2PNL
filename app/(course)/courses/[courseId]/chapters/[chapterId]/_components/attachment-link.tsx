@@ -1,7 +1,7 @@
-"use client"
-import { useState } from "react";
+"use client";
 import axios from "axios";
 import { File } from "lucide-react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface AttachmentLinkProps {

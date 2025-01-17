@@ -1,6 +1,7 @@
-import { IconBadge } from "@/components/icon-badge";
 import { LucideIcon } from "lucide-react";
 import React from "react";
+
+import { IconBadge } from "@/components/icon-badge";
 
 interface InfoCardProps {
   variant?: "default" | "success";
@@ -21,7 +22,7 @@ export const InfoCard = ({
       <div>
         <p className="font-medium">{label}</p>
         <p className="text-grey-500 text-sm">
-            {numberOfItems} {numberOfItems === 1 ? "Course" : "Courses"}
+          {numberOfItems} {numberOfItems === 1 ? "Course" : "Courses"}
         </p>
       </div>
     </div>

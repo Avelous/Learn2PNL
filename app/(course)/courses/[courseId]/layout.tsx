@@ -1,9 +1,11 @@
-import { getProgress } from "@/actions/course/get-progress";
-import db from "@/lib/db";
-import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import CourseSidebar from "./_components/course-sidebar";
+
+import { getProgress } from "@/actions/course/get-progress";
+import { currentUser } from "@/lib/auth";
+import db from "@/lib/db";
+
 import CourseNavbar from "./_components/course-navbar";
+import CourseSidebar from "./_components/course-sidebar";
 
 const CourseLayout = async ({
   children,

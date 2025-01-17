@@ -1,12 +1,13 @@
 "use client";
 
+import axios from "axios";
+import { Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
 import ConfirmModal from "@/components/modals/confirm-modal";
 import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 
 interface ActionsProps {

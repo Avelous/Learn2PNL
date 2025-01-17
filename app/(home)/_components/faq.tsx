@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
 import { Plus, Minus } from "lucide-react";
-import { SocialLinkBanner } from "./social-link-banner";
+import React from "react";
+
 import { Separator } from "@/components/ui/separator";
 import { discordUrl } from "@/data/constants";
+
+import { SocialLinkBanner } from "./social-link-banner";
 
 const faqContents = [
   {

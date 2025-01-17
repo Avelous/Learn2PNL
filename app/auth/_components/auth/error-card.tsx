@@ -1,5 +1,6 @@
-import { CardWrapper } from "./card-wrapper";
 import { TriangleAlert } from "lucide-react";
+
+import { CardWrapper } from "./card-wrapper";
 
 export const ErrorCard = ({}) => {
   return (

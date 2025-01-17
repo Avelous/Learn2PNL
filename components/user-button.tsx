@@ -1,18 +1,18 @@
 "use client";
 
+import { User } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
+
+import { useCurrentUser } from "@/hooks/use-current-user";
+
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-
-import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
-
-import { User } from "lucide-react";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { LogoutButton } from "../app/auth/_components/auth/logout-button";
-import { LogOutIcon } from "lucide-react";
 
 export const UserButton = () => {
   const user = useCurrentUser();

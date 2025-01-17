@@ -1,11 +1,12 @@
 "use client";
 
 import { Category } from "@prisma/client";
-import { FcCurrencyExchange } from "react-icons/fc";
-import { FaBitcoin } from "react-icons/fa";
-import { IconType } from "react-icons/lib";
-import CategoryItem from "./category-item";
 import { Suspense } from "react";
+import { FaBitcoin } from "react-icons/fa";
+import { FcCurrencyExchange } from "react-icons/fc";
+import { IconType } from "react-icons/lib";
+
+import CategoryItem from "./category-item";
 
 interface CategoriesProps {
   items: Category[];

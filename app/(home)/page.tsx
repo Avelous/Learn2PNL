@@ -1,24 +1,19 @@
 "use client";
-import React from "react";
-import Link from "next/link";
+import { Users, TvMinimalPlay, Trophy } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
+import { Button } from "@/components/ui/button";
+import { discordUrl } from "@/data/constants";
 import { features } from "@/data/data";
 
-import { useCurrentUser } from "@/hooks/use-current-user";
-
-import { Testimonials } from "./_components/testimonials";
-import { Button } from "@/components/ui/button";
-import Footer from "./_components/footer";
 import { FAQ } from "./_components/faq";
+import Footer from "./_components/footer";
 import Navbar from "./_components/navbar";
-import { Users, TvMinimalPlay, Trophy } from "lucide-react";
-
-import { discordUrl } from "@/data/constants";
+import { Testimonials } from "./_components/testimonials";
 
 export default function LandingPage() {
-  const user = useCurrentUser();
-
   return (
     <div className="min-h-screen text-sm">
       <Navbar />
@@ -72,8 +67,10 @@ export default function LandingPage() {
           <div className="relative">
             <div className="aspect-video bg-white rounded-lg shadow-lg overflow-hidden">
               <Image
-                src=""
+                src="/course.png"
                 alt="Course preview"
+                width={800}
+                height={500}
                 className="w-full h-full object-cover"
               />
             </div>

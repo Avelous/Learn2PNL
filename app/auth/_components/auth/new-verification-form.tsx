@@ -1,13 +1,14 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
-import { CardWrapper } from "./card-wrapper";
 import { BeatLoader } from "react-spinners";
 
-import { useSearchParams } from "next/navigation";
 import { newVerification } from "@/actions/auth/new-verification";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
+
+import { CardWrapper } from "./card-wrapper";
 
 export const NewVerificationForm = () => {
   const searchParams = useSearchParams();

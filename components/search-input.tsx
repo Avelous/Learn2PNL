@@ -1,11 +1,13 @@
 "use client";
 
 import { Search } from "lucide-react";
-import React, { useState, useEffect, Suspense } from "react";
-import { Input } from "./ui/input";
-import { useDebounce } from "@/hooks/use-debounce";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import qs from "query-string";
+import React, { useState, useEffect, Suspense } from "react";
+
+import { useDebounce } from "@/hooks/use-debounce";
+
+import { Input } from "./ui/input";
 
 const SearchInputInner = () => {
   const [value, setValue] = useState("");

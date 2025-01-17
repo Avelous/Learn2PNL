@@ -1,7 +1,8 @@
 "use client";
 
+import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 import * as React from "react";
-import { testimonials } from "@/data/data";
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -11,8 +12,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import Image from "next/image";
+import { testimonials } from "@/data/data";
 
 export function Testimonials() {
   const plugin = React.useRef(

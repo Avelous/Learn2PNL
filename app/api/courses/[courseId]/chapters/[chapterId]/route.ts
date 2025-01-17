@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
-import { currentUser } from "@/lib/auth";
 import Mux from "@mux/mux-node";
+import { NextResponse } from "next/server";
 
+import { currentUser } from "@/lib/auth";
 import db from "@/lib/db";
 
 const { video } = new Mux({

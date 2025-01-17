@@ -1,9 +1,10 @@
-import db from "@/lib/db";
-import { stripe } from "@/lib/stripe";
-import { currentUser } from "@/lib/auth";
 import { url } from "inspector";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+
+import { currentUser } from "@/lib/auth";
+import db from "@/lib/db";
+import { stripe } from "@/lib/stripe";
 
 export async function POST(
   req: Request,

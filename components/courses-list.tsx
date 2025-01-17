@@ -1,4 +1,5 @@
 import { Category, Course, Chapter } from "@prisma/client";
+
 import CourseCard from "./course-card";
 
 type CourseWithProgressWithCategory = Course & {

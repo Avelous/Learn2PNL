@@ -1,5 +1,7 @@
 "use client";
 
+import { Chapter, MuxData } from "@prisma/client";
+import axios from "axios";
 import {
   VideoIcon,
   Pencil,
@@ -7,14 +9,13 @@ import {
   Loader2,
   CheckCircle,
 } from "lucide-react";
-import axios from "axios";
-import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Chapter, MuxData } from "@prisma/client";
+import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
+
 import CustomVideoPlayer from "@/components/custom-video-player";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
 // Processing states for better UX feedback

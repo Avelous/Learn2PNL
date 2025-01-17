@@ -1,9 +1,10 @@
-import { getDashboardCourses } from "@/actions/course/get-dashboard-courses";
-import CoursesList from "@/components/courses-list";
-
-import { currentUser } from "@/lib/auth";
 import { CheckCircle, Clock } from "lucide-react";
 import { redirect } from "next/navigation";
+
+import { getDashboardCourses } from "@/actions/course/get-dashboard-courses";
+import CoursesList from "@/components/courses-list";
+import { currentUser } from "@/lib/auth";
+
 import { InfoCard } from "./_components/info-card";
 
 export default async function Dashboard() {

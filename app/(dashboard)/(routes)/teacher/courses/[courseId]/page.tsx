@@ -1,24 +1,25 @@
-import React from "react";
-import db from "@/lib/db";
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { IconBadge } from "@/components/icon-badge";
 import {
   CircleDollarSign,
   LayoutDashboard,
   ListChecks,
   File,
 } from "lucide-react";
-import ImageForm from "./_components/image-form";
+import { redirect } from "next/navigation";
+import React from "react";
 
-import DescriptionForm from "./_components/description-form";
-import TitleForm from "./_components/title-form";
-import CategoryForm from "./_components/category-form";
-import PriceForm from "./_components/price-form";
-import AttachmentForm from "./_components/attachment-form";
-import ChaptersForm from "./_components/chapters-form";
 import Banner from "@/components/banner";
+import { IconBadge } from "@/components/icon-badge";
+import { currentUser } from "@/lib/auth";
+import db from "@/lib/db";
+
 import { Actions } from "./_components/actions";
+import AttachmentForm from "./_components/attachment-form";
+import CategoryForm from "./_components/category-form";
+import ChaptersForm from "./_components/chapters-form";
+import DescriptionForm from "./_components/description-form";
+import ImageForm from "./_components/image-form";
+import PriceForm from "./_components/price-form";
+import TitleForm from "./_components/title-form";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const user = await currentUser();
