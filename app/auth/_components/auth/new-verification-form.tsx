@@ -14,23 +14,29 @@ export const NewVerificationForm = () => {
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const token = searchParams.get("token");
 
-  const onSubmit = useCallback(() => {
-    if (success || error) return;
+  const onSubmit = useCallback(async () => {
+    if (!isLoading) return;
 
     if (!token) {
-      setError("Missung token ");
+      setError("Missing token");
+      setIsLoading(false);
       return;
     }
-    newVerification(token)
-      .then((data) => {
-        setSuccess(data?.success);
-        setError(data?.error);
-      })
-      .catch(() => setError("Something went wrong"));
-  }, [token, success, error]);
+
+    try {
+      const data = await newVerification(token);
+      setSuccess(data?.success);
+      setError(data?.error);
+    } catch {
+      setError("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [token, isLoading]);
 
   useEffect(() => {
     onSubmit();
@@ -43,9 +49,9 @@ export const NewVerificationForm = () => {
       backButtonLabel="Back to login"
     >
       <div className="flex items-center justify-center w-full">
-        {!success && !error && <BeatLoader color="#2563EB" />}
-        {!success && <FormError message={error} />}
-        <FormSuccess message={success} />
+        {isLoading && <BeatLoader color="#2563EB" />}
+        {!isLoading && error && <FormError message={error} />}
+        {!isLoading && success && <FormSuccess message={success} />}
       </div>
     </CardWrapper>
   );
